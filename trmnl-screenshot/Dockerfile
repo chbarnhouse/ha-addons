@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/homeassistant/amd64-base-nodejs
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 # Set working directory
