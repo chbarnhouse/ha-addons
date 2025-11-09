@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY package*.json ./
 
 # Install Node.js dependencies
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
 # Copy application code
 COPY src ./src
