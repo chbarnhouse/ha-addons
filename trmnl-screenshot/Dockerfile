@@ -1,14 +1,13 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Install Node.js and dependencies for Puppeteer (Debian-based)
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Install Node.js and dependencies for Puppeteer (Alpine-based)
+RUN apk add --no-cache \
     nodejs \
     npm \
     chromium \
     ca-certificates \
-    dbus \
-    && rm -rf /var/lib/apt/lists/*
+    dbus
 
 # Set working directory
 WORKDIR /app
