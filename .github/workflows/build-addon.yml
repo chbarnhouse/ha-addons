@@ -69,8 +69,6 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot:${{ steps.version.outputs.version }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot:latest
-          build-args: |
-            BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

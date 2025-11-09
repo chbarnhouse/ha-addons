@@ -1,7 +1,6 @@
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM alpine:latest
 
-# Install Node.js and dependencies for Puppeteer (Alpine-based)
+# Install Node.js, npm, and dependencies for Puppeteer
 RUN apk add --no-cache \
     nodejs \
     npm \
@@ -20,12 +19,6 @@ RUN npm install --omit=dev
 
 # Copy application code
 COPY src ./src
-
-# Copy S6-overlay service files and other rootfs content
-COPY rootfs/ /
-
-# Make service script executable
-RUN chmod +x /etc/services.d/trmnl-screenshot/run
 
 # Create data directory for screenshots
 RUN mkdir -p /data
