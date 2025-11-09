@@ -47,8 +47,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD node -e "require('http').get('http://localhost:3000/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
-# Use dumb-init to handle signals properly
-ENTRYPOINT ["dumb-init", "--"]
-
-# Start the application (use shell form to ensure node is found in PATH)
-CMD ["sh", "-c", "node src/index.js"]
+# S6-overlay will handle process management with init: false
+# No need for explicit ENTRYPOINT/CMD
