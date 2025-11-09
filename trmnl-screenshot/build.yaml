@@ -7,3 +7,5 @@ labels:
   org.opencontainers.image.description: "Capture Home Assistant dashboards for TRMNL e-ink devices"
   org.opencontainers.image.source: "https://github.com/chbarnhouse/ha-addons"
   org.opencontainers.image.licenses: "Apache License 2.0"
+args:
+  BUILD_FROM: "ghcr.io/home-assistant/amd64-base:latest"
