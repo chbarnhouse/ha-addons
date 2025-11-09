@@ -1,67 +1,11 @@
-name: "TRMNL Screenshot Addon"
-description: "Capture Home Assistant dashboards for TRMNL e-ink devices"
-version: "0.1.0"
-slug: "trmnl_screenshot"
-homeassistant: "2024.1.0"
-image: "ghcr.io/homeassistant/{arch}-base-nodejs"
-url: "https://github.com/chbarnhouse/ha-addons"
-codeowners:
-  - "@chbarnhouse"
+name: TRMNL Screenshot
+description: Capture Home Assistant dashboards for TRMNL e-ink devices
+version: 0.1.0
+slug: trmnl_screenshot
+image: ghcr.io/homeassistant/{arch}-base-nodejs
 arch:
-  - aarch64
   - amd64
   - armv7
-startup: "services"
-boot: "auto"
-map:
-  - "config:rw"
-ports:
-  3000/tcp: null
-ports_description:
-  3000/tcp: "TRMNL Screenshot Addon (internal only, via HA Ingress)"
-environment:
-  NODE_ENV: production
-  LOG_LEVEL: info
-  SCREENSHOT_TIMEOUT: "30000"
-  SCREENSHOT_QUALITY: "90"
-options:
-  screenshot_interval: 300
-  image_quality: 90
-  max_concurrent_captures: 3
-  log_level: "info"
-schema:
-  screenshot_interval:
-    name: "Screenshot capture interval"
-    description: "Seconds between screenshot captures"
-    selector:
-      number:
-        min: 60
-        max: 3600
-        step: 60
-        unit_of_measurement: seconds
-  image_quality:
-    name: "Image quality"
-    description: "PNG compression quality (0-100)"
-    selector:
-      number:
-        min: 50
-        max: 100
-        step: 10
-  max_concurrent_captures:
-    name: "Max concurrent captures"
-    description: "Maximum number of simultaneous Puppeteer captures"
-    selector:
-      number:
-        min: 1
-        max: 10
-        step: 1
-  log_level:
-    name: "Log level"
-    description: "Logging verbosity"
-    selector:
-      select:
-        options:
-          - "error"
-          - "warn"
-          - "info"
-          - "debug"
+  - aarch64
+startup: services
+boot: auto
