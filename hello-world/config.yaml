@@ -1,9 +1,0 @@
-name: Hello World
-description: A simple test addon
-version: 1.0.0
-slug: hello_world
-image: ghcr.io/homeassistant/{arch}-base
-arch:
-  - amd64
-  - armv7
-  - aarch64
