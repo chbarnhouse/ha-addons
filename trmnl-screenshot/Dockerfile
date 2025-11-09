@@ -38,3 +38,6 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Expose port for the addon HTTP server
 EXPOSE 3000
+
+# Start the application
+CMD [ "node", "/app/src/index.js" ]
