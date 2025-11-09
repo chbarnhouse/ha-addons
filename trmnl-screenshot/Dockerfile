@@ -20,6 +20,12 @@ RUN npm install --omit=dev
 # Copy application code
 COPY src ./src
 
+# Copy rootfs for service management
+COPY rootfs/ /
+
+# Make service script executable
+RUN chmod +x /etc/services.d/trmnl-screenshot/run
+
 # Create data directory for screenshots
 RUN mkdir -p /data
 
@@ -32,5 +38,5 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 # Expose port for the addon HTTP server
 EXPOSE 3000
 
-# Start the application
-CMD [ "node", "/app/src/index.js" ]
+# Start the application using shell form
+CMD exec node /app/src/index.js
