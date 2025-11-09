@@ -50,5 +50,5 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
 
-# Start the application
-CMD ["node", "src/index.js"]
+# Start the application (use shell form to ensure node is found in PATH)
+CMD ["sh", "-c", "node src/index.js"]
