@@ -13,9 +13,4 @@ options:
   image_quality: 90
   max_concurrent_captures: 3
   log_level: info
-schema:
-  screenshot_interval: int(60,3600)?
-  image_quality: int(1,100)?
-  max_concurrent_captures: int(1,10)?
-  log_level: str?
 image: "ghcr.io/chbarnhouse/{arch}-addon-trmnl-screenshot"
