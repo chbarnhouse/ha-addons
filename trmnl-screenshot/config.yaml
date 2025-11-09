@@ -14,31 +14,8 @@ options:
   max_concurrent_captures: 3
   log_level: info
 schema:
-  screenshot_interval:
-    type: integer
-    description: Screenshot capture interval in seconds
-    default: 300
-    minimum: 60
-    maximum: 3600
-  image_quality:
-    type: integer
-    description: Image quality for PNG compression (1-100)
-    default: 90
-    minimum: 1
-    maximum: 100
-  max_concurrent_captures:
-    type: integer
-    description: Maximum concurrent screenshot captures
-    default: 3
-    minimum: 1
-    maximum: 10
-  log_level:
-    type: list
-    description: Logging level
-    default: info
-    options:
-      - debug
-      - info
-      - warn
-      - error
+  screenshot_interval: int(60, 3600)?
+  image_quality: int(1, 100)?
+  max_concurrent_captures: int(1, 10)?
+  log_level: list(debug|info|warn|error)?
 image: "ghcr.io/chbarnhouse/{arch}-addon-trmnl-screenshot"
