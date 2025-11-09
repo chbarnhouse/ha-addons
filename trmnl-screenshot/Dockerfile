@@ -21,6 +21,12 @@ RUN npm install --omit=dev
 # Copy application code
 COPY src ./src
 
+# Copy S6-overlay service files and other rootfs content
+COPY rootfs/ /
+
+# Make service script executable
+RUN chmod +x /etc/services.d/trmnl-screenshot/run
+
 # Create data directory for screenshots
 RUN mkdir -p /data
 
