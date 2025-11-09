@@ -6,8 +6,9 @@ slug: trmnl_screenshot
 image: ghcr.io/chbarnhouse/{arch}-addon-trmnl-screenshot
 arch:
   - amd64
-  - armv7
-  - aarch64
+  # armv7 and aarch64 support coming soon
+  # - armv7
+  # - aarch64
 init: false
 startup: services
 boot: auto
