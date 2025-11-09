@@ -1,4 +1,6 @@
-FROM alpine:latest
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
+
+FROM ${BUILD_FROM}
 
 # Install Node.js, npm, and dependencies for Puppeteer
 RUN apk add --no-cache \
@@ -20,8 +22,8 @@ RUN npm install --omit=dev
 # Copy application code
 COPY src ./src
 
-# Create data directory
-RUN mkdir -p /data
+# Copy S6-overlay service script
+COPY rootfs /
 
 # Set environment
 ENV NODE_ENV=production
@@ -31,6 +33,3 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Expose port for the addon HTTP server
 EXPOSE 3000
-
-# Use shell to execute node directly
-CMD ["/bin/sh", "-c", "exec node /app/src/index.js"]

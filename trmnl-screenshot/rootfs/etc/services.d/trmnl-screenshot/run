@@ -1,10 +1,4 @@
-#!/usr/bin/with-contenv bashio
-# ==============================================================================
-# Start TRMNL Screenshot addon service
-# ==============================================================================
-set -e
+#!/command/execlineb -P
+# S6-overlay service script for TRMNL Screenshot addon
 
-bashio::log.info "Starting TRMNL Screenshot addon..."
-
-# Execute the application
-exec node /app/src/index.js
+exec -c node /app/src/index.js
