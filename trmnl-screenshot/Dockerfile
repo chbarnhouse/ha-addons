@@ -20,14 +20,12 @@ RUN npm install --omit=dev
 # Copy application code
 COPY src ./src
 
-# Copy rootfs for service management
-COPY rootfs/ /
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
 
-# Make service script executable
-RUN chmod +x /etc/services.d/trmnl-screenshot/run
-
-# Create data directory for screenshots
-RUN mkdir -p /data
+# Make entrypoint executable
+RUN chmod +x /entrypoint.sh && \
+    mkdir -p /data
 
 # Set environment
 ENV NODE_ENV=production
@@ -38,5 +36,5 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 # Expose port for the addon HTTP server
 EXPOSE 3000
 
-# Start the application using shell form
-CMD exec node /app/src/index.js
+# Use entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
