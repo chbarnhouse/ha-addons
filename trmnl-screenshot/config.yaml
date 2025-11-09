@@ -3,6 +3,7 @@ name: TRMNL Screenshot
 description: Capture Home Assistant dashboards for TRMNL e-ink devices
 version: "0.1.0"
 slug: trmnl_screenshot
+url: "https://github.com/chbarnhouse/ha-addons/tree/master/trmnl-screenshot"
 image: ghcr.io/chbarnhouse/{arch}-addon-trmnl-screenshot
 arch:
   - amd64
