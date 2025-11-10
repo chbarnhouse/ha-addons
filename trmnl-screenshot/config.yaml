@@ -1,6 +1,6 @@
 ---
 name: TRMNL Screenshot
-version: "0.1.28"
+version: "0.1.29"
 slug: trmnl_screenshot
 description: Capture Home Assistant dashboards for TRMNL e-ink devices
 url: "https://github.com/chbarnhouse/ha-addons/tree/main/trmnl-screenshot"
@@ -8,6 +8,7 @@ arch:
   - amd64
 init: false
 startup: application
+boot: auto
 options:
   screenshot_interval: 300
   image_quality: 90

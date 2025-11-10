@@ -21,6 +21,9 @@ RUN npm install --omit=dev
 # Copy application code
 COPY src ./src
 
+# Copy startup script (same as Spoolman pattern)
+COPY run.sh /app/start.sh
+
 # Set environment
 ENV NODE_ENV=production
 ENV DATA_PATH=/data
@@ -30,5 +33,5 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 # Expose port for the addon HTTP server
 EXPOSE 3000
 
-# Start Node.js application directly
-CMD ["node", "/app/src/index.js"]
+# Use bashio wrapper (proven working pattern from Spoolman)
+ENTRYPOINT ["bashio", "/app/start.sh"]
