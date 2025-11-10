@@ -1,10 +1,5 @@
-#!/usr/bin/with-contenv bashio
-# ==============================================================================
-# Start TRMNL Screenshot addon
-# ==============================================================================
-set -e
+#!/bin/bash
+# This script is called by Home Assistant to start the addon
+# With S6-overlay, we just exit and let S6 manage the service
 
-bashio::log.info "Starting TRMNL Screenshot addon..."
-
-# Execute the application
-exec node /app/src/index.js
+exit 0

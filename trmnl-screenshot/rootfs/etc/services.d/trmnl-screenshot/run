@@ -1,4 +1,2 @@
-#!/command/execlineb -P
-# S6-overlay service script for TRMNL Screenshot addon
-
-exec -c node /app/src/index.js
+#!/bin/sh
+exec node /app/src/index.js
