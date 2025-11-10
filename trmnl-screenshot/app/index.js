@@ -146,7 +146,7 @@ const server = http.createServer(async (req, res) => {
         status: 'ok',
         timestamp: new Date().toISOString(),
         addon: 'TRMNL Screenshot',
-        version: '0.1.13',
+        version: '0.1.14',
         browser_ready: browser !== null,
         last_screenshot: lastScreenshotTime
       }));
