@@ -1,11 +1,16 @@
 #!/bin/sh
+set -e
 
-# Simple test script - just logs and loops
-echo "=== TRMNL Screenshot Service Starting ===" >&2
-echo "Current user: $(id)" >&2
+# TRMNL Screenshot Addon Startup Script
 
-# Simple loop to keep the container running
-while true; do
-  echo "Service is running at $(date)" >&2
-  sleep 30
-done
+# Log startup
+echo "Starting TRMNL Screenshot addon..."
+echo "User: $(id)"
+
+# Log addon options
+echo "Addon configuration:"
+echo "  Data path: ${DATA_PATH}"
+echo "  Node env: ${NODE_ENV}"
+
+# Start the Node.js application
+exec node /app/src/index.js

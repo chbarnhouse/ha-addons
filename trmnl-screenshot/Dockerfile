@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:18.0.3
 FROM ${BUILD_FROM}
 
 # Install Node.js and dependencies
@@ -21,8 +21,9 @@ RUN npm install --omit=dev
 # Copy application code
 COPY src ./src
 
-# Copy rootfs for S6-overlay services
-COPY rootfs /
+# Copy startup script
+COPY run.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
 # Set environment
 ENV NODE_ENV=production
@@ -32,3 +33,6 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Expose port for the addon HTTP server
 EXPOSE 3000
+
+# Use bashio to wrap the start script
+ENTRYPOINT ["bashio", "/app/start.sh"]
