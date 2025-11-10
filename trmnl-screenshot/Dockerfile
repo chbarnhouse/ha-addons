@@ -22,8 +22,11 @@ RUN npm install --omit=dev
 # Copy application code
 COPY src ./src
 
-# Copy S6-overlay service script
-COPY rootfs /
+# Copy run script
+COPY run.sh /
+
+# Make run script executable
+RUN chmod +x /run.sh
 
 # Set environment
 ENV NODE_ENV=production
@@ -33,3 +36,6 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Expose port for the addon HTTP server
 EXPOSE 3000
+
+# Run the startup script via dumb-init
+CMD ["/run.sh"]

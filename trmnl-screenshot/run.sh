@@ -1,5 +1,11 @@
-#!/bin/bash
-# This script is called by Home Assistant to start the addon
-# With S6-overlay, we just exit and let S6 manage the service
+#!/bin/sh
 
-exit 0
+# Simple test script - just logs and loops
+echo "=== TRMNL Screenshot Service Starting ===" >&2
+echo "Current user: $(id)" >&2
+
+# Simple loop to keep the container running
+while true; do
+  echo "Service is running at $(date)" >&2
+  sleep 30
+done
