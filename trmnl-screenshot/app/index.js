@@ -289,7 +289,7 @@ const server = http.createServer(async (req, res) => {
                 <div class="info-grid">
                   <div class="info-item">
                     <div class="info-label">Version</div>
-                    <div class="info-value">0.1.9</div>
+                    <div class="info-value">0.1.11</div>
                   </div>
                   <div class="info-item">
                     <div class="info-label">Port</div>
