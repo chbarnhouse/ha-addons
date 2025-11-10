@@ -21,10 +21,6 @@ RUN npm install --omit=dev
 # Copy application code
 COPY src ./src
 
-# Copy startup script
-COPY run.sh /app/start.sh
-RUN chmod +x /app/start.sh
-
 # Set environment
 ENV NODE_ENV=production
 ENV DATA_PATH=/data
@@ -34,5 +30,5 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 # Expose port for the addon HTTP server
 EXPOSE 3000
 
-# Use sh directly instead of bashio
-ENTRYPOINT ["/bin/sh", "/app/start.sh"]
+# Start Node.js application directly
+CMD ["node", "/app/src/index.js"]
