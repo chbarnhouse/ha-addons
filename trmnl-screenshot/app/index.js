@@ -6,15 +6,19 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 3000;
 const DATA_PATH = process.env.DATA_PATH || '/data';
+const INGRESS_PORT = process.env.INGRESS_PORT ? parseInt(process.env.INGRESS_PORT) : 3000;
+const PORT = INGRESS_PORT;
+const INGRESS_MODE = !!process.env.INGRESS_PORT;
+const SERVER_HOST = INGRESS_MODE ? '127.0.0.1' : '0.0.0.0';
 
 // Configuration
 let config = {
   ha_url: process.env.HA_URL || 'http://homeassistant.local:8123',
   ha_token: process.env.HA_TOKEN || '',
   screenshot_path: path.join(DATA_PATH, 'screenshots'),
-  log_level: process.env.LOG_LEVEL || 'info'
+  log_level: process.env.LOG_LEVEL || 'info',
+  ingress_mode: INGRESS_MODE
 };
 
 // Ensure data directory exists
@@ -130,7 +134,7 @@ const server = http.createServer(async (req, res) => {
         status: 'ok',
         timestamp: new Date().toISOString(),
         addon: 'TRMNL Screenshot',
-        version: '0.1.3',
+        version: '0.1.4',
         browser_ready: browser !== null,
         last_screenshot: lastScreenshotTime
       }));
@@ -244,7 +248,7 @@ const server = http.createServer(async (req, res) => {
                 <div class="info-grid">
                   <div class="info-item">
                     <div class="info-label">Version</div>
-                    <div class="info-value">0.1.3</div>
+                    <div class="info-value">0.1.4</div>
                   </div>
                   <div class="info-item">
                     <div class="info-label">Port</div>
@@ -342,6 +346,9 @@ async function start() {
   console.log(`Node.js version: ${process.version}`);
   console.log(`Home Assistant URL: ${config.ha_url}`);
   console.log(`Data path: ${DATA_PATH}`);
+  if (INGRESS_MODE) {
+    console.log(`Mode: Ingress (via Home Assistant)`);
+  }
   console.log('');
 
   // Initialize browser
@@ -351,13 +358,17 @@ async function start() {
   }
 
   // Start HTTP server
-  server.listen(PORT, '0.0.0.0', () => {
+  server.listen(PORT, SERVER_HOST, () => {
     console.log('======================================');
     console.log('TRMNL Screenshot Addon Started');
     console.log('======================================');
-    console.log(`Listening on http://0.0.0.0:${PORT}`);
-    console.log(`Web UI: http://localhost:${PORT}`);
-    console.log(`Health: http://localhost:${PORT}/health`);
+    const mode = INGRESS_MODE ? 'Ingress Mode (via Home Assistant)' : 'Direct Mode';
+    console.log(`Mode: ${mode}`);
+    console.log(`Listening on http://${SERVER_HOST}:${PORT}`);
+    if (!INGRESS_MODE) {
+      console.log(`Web UI: http://localhost:${PORT}`);
+      console.log(`Health: http://localhost:${PORT}/health`);
+    }
     console.log('');
   });
 
