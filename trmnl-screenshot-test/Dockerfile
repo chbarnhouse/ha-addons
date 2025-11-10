@@ -34,5 +34,5 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 # Expose port for the addon HTTP server
 EXPOSE 3000
 
-# Use bashio to wrap the start script
-ENTRYPOINT ["bashio", "/app/start.sh"]
+# Use sh directly instead of bashio
+ENTRYPOINT ["/bin/sh", "/app/start.sh"]
