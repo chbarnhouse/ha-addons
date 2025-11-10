@@ -133,7 +133,7 @@ const server = http.createServer(async (req, res) => {
         status: 'ok',
         timestamp: new Date().toISOString(),
         addon: 'TRMNL Screenshot',
-        version: '0.1.8',
+        version: '0.1.9',
         browser_ready: browser !== null,
         last_screenshot: lastScreenshotTime
       }));
@@ -247,7 +247,7 @@ const server = http.createServer(async (req, res) => {
                 <div class="info-grid">
                   <div class="info-item">
                     <div class="info-label">Version</div>
-                    <div class="info-value">0.1.8</div>
+                    <div class="info-value">0.1.9</div>
                   </div>
                   <div class="info-item">
                     <div class="info-label">Port</div>
