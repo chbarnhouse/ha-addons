@@ -1,6 +1,6 @@
 {
   "name": "trmnl-screenshot-addon",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Home Assistant addon to capture dashboards for TRMNL e-ink devices",
   "main": "app/index.js",
   "scripts": {
