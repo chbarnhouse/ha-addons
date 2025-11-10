@@ -126,6 +126,19 @@ async function captureScreenshot(dashboardUrl) {
 const server = http.createServer(async (req, res) => {
   log('debug', `${req.method} ${req.url}`);
 
+  // Set response timeout to prevent hanging requests
+  const timeout = setTimeout(() => {
+    if (!res.headersSent) {
+      log('error', `Request timeout: ${req.method} ${req.url}`);
+      res.writeHead(504, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Request timeout' }));
+    }
+  }, 30000); // 30 second timeout
+
+  // Clean up timeout when response ends
+  res.on('finish', () => clearTimeout(timeout));
+  res.on('close', () => clearTimeout(timeout));
+
   try {
     if (req.url === '/health') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -133,7 +146,7 @@ const server = http.createServer(async (req, res) => {
         status: 'ok',
         timestamp: new Date().toISOString(),
         addon: 'TRMNL Screenshot',
-        version: '0.1.10',
+        version: '0.1.11',
         browser_ready: browser !== null,
         last_screenshot: lastScreenshotTime
       }));
@@ -141,20 +154,49 @@ const server = http.createServer(async (req, res) => {
     else if (req.url === '/api/screenshot' && req.method === 'POST') {
       // Capture screenshot endpoint
       let body = '';
-      req.on('data', chunk => { body += chunk; });
+      const MAX_BODY_SIZE = 10 * 1024; // 10KB max body size
+      let bodySize = 0;
+
+      req.on('data', chunk => {
+        bodySize += chunk.length;
+        if (bodySize > MAX_BODY_SIZE) {
+          req.pause();
+          log('error', 'POST body exceeds maximum size');
+          if (!res.headersSent) {
+            res.writeHead(413, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: 'Body too large' }));
+          }
+          return;
+        }
+        body += chunk.toString();
+      });
+
+      req.on('error', (error) => {
+        log('error', `Request error: ${error.message}`);
+        if (!res.headersSent) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: 'Request error' }));
+        }
+      });
+
       req.on('end', async () => {
         try {
-          const payload = JSON.parse(body);
+          const payload = body ? JSON.parse(body) : {};
           const dashboardUrl = payload.dashboard_url ||
             `${config.ha_url}/lovelace/default` +
             (config.ha_token ? `?token=${config.ha_token}` : '');
 
           const result = await captureScreenshot(dashboardUrl);
-          res.writeHead(result.success ? 200 : 400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(result));
+          if (!res.headersSent) {
+            res.writeHead(result.success ? 200 : 400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(result));
+          }
         } catch (error) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: false, error: error.message }));
+          log('error', `Screenshot capture error: ${error.message}`);
+          if (!res.headersSent) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: error.message }));
+          }
         }
       });
     }
@@ -332,8 +374,12 @@ const server = http.createServer(async (req, res) => {
     }
   } catch (error) {
     log('error', `Request handler error: ${error.message}`);
-    res.writeHead(500, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'Internal server error' }));
+    if (!res.headersSent) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Internal server error' }));
+    } else {
+      res.end();
+    }
   }
 });
 
