@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const DATA_PATH = process.env.DATA_PATH || '/data';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 const SERVER_HOST = '0.0.0.0'; // Listen on all interfaces for ingress + direct access
 
 // Configuration
@@ -131,7 +131,7 @@ const server = http.createServer(async (req, res) => {
         status: 'ok',
         timestamp: new Date().toISOString(),
         addon: 'TRMNL Screenshot',
-        version: '0.1.5',
+        version: '0.1.6',
         browser_ready: browser !== null,
         last_screenshot: lastScreenshotTime
       }));
@@ -245,11 +245,11 @@ const server = http.createServer(async (req, res) => {
                 <div class="info-grid">
                   <div class="info-item">
                     <div class="info-label">Version</div>
-                    <div class="info-value">0.1.5</div>
+                    <div class="info-value">0.1.6</div>
                   </div>
                   <div class="info-item">
                     <div class="info-label">Port</div>
-                    <div class="info-value">3000</div>
+                    <div class="info-value">8000</div>
                   </div>
                   <div class="info-item">
                     <div class="info-label">Home Assistant</div>
