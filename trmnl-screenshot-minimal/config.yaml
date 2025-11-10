@@ -1,12 +1,12 @@
 ---
 name: TRMNL Screenshot Minimal
-version: "0.1.0"
+version: "0.1.1"
 slug: trmnl_screenshot_minimal
 description: Minimal test addon for TRMNL screenshot capture
 url: "https://github.com/chbarnhouse/ha-addons/tree/main/trmnl-screenshot-minimal"
 arch:
   - amd64
-init: true
+init: false
 startup: application
 boot: auto
 options:
