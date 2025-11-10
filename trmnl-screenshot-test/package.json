@@ -1,0 +1,47 @@
+{
+  "name": "trmnl-screenshot-addon",
+  "version": "0.1.0",
+  "description": "TRMNL Screenshot Addon for Home Assistant - Captures HA dashboards and hosts them for e-ink displays",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "lint": "eslint src/ tests/",
+    "lint:fix": "eslint src/ tests/ --fix",
+    "format": "prettier --write 'src/**/*.js' 'tests/**/*.js'",
+    "format:check": "prettier --check 'src/**/*.js' 'tests/**/*.js'",
+    "type-check": "echo 'TypeScript checking via JSDoc - see .eslintrc.json'",
+    "pretest": "npm run lint"
+  },
+  "keywords": [
+    "trmnl",
+    "e-ink",
+    "home-assistant",
+    "addon",
+    "screenshot"
+  ],
+  "author": "TRMNL Community",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.0.0",
+    "sharp": "^0.32.6",
+    "ws": "^8.14.2",
+    "dotenv": "^16.3.1",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "eslint": "^8.52.0",
+    "prettier": "^3.0.3",
+    "jest-localstorage-mock": "^2.4.26"
+  }
+}
