@@ -11,9 +11,11 @@ const PORT = process.env.PORT || 5001;
 const SERVER_HOST = '0.0.0.0'; // Listen on all interfaces for ingress + direct access
 
 // Configuration
+// Use SUPERVISOR_TOKEN provided by Home Assistant addon system, fallback to HA_TOKEN or empty string
+const supervisorToken = process.env.SUPERVISOR_TOKEN || process.env.HA_TOKEN || '';
 let config = {
   ha_url: process.env.HA_URL || 'http://homeassistant.local:8123',
-  ha_token: process.env.HA_TOKEN || '',
+  ha_token: supervisorToken,
   screenshot_path: path.join(DATA_PATH, 'screenshots'),
   log_level: process.env.LOG_LEVEL || 'info'
 };
@@ -344,6 +346,12 @@ async function start() {
   console.log(`Home Assistant URL: ${config.ha_url}`);
   console.log(`Data path: ${DATA_PATH}`);
   console.log(`Listening on port ${PORT}`);
+  console.log(`Log level: ${config.log_level}`);
+  if (config.ha_token) {
+    console.log('HA authentication token: provided');
+  } else {
+    console.log('HA authentication token: not provided (optional)');
+  }
   console.log('');
 
   // Initialize browser
