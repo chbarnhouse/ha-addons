@@ -5,7 +5,7 @@ echo "========================================"
 echo "TRMNL Screenshot Addon Starting"
 echo "========================================"
 echo "Node.js version: $(node --version)"
-echo "Starting application on port 3000..."
+echo "Starting application on port 5001..."
 echo ""
 
 # Execute the Node.js application

@@ -29,7 +29,7 @@ RUN chmod +x /run.sh
 COPY app/ ./
 
 # Expose port
-EXPOSE 3000
+EXPOSE 5001
 
 # Use run.sh as entrypoint
 CMD ["/run.sh"]
