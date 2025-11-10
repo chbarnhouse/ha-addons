@@ -131,7 +131,7 @@ const server = http.createServer(async (req, res) => {
         status: 'ok',
         timestamp: new Date().toISOString(),
         addon: 'TRMNL Screenshot',
-        version: '0.1.7',
+        version: '0.1.8',
         browser_ready: browser !== null,
         last_screenshot: lastScreenshotTime
       }));
@@ -245,7 +245,7 @@ const server = http.createServer(async (req, res) => {
                 <div class="info-grid">
                   <div class="info-item">
                     <div class="info-label">Version</div>
-                    <div class="info-value">0.1.7</div>
+                    <div class="info-value">0.1.8</div>
                   </div>
                   <div class="info-item">
                     <div class="info-label">Port</div>
@@ -354,10 +354,13 @@ async function start() {
 
   // Start HTTP server
   server.listen(PORT, SERVER_HOST, () => {
+    const addr = server.address();
     console.log('======================================');
     console.log('TRMNL Screenshot Addon Started');
     console.log('======================================');
     console.log(`✓ HTTP server running on port ${PORT}`);
+    console.log(`✓ Listening on ${SERVER_HOST}:${PORT}`);
+    console.log(`✓ Server address: ${JSON.stringify(addr)}`);
     console.log(`✓ Web UI: http://localhost:${PORT}`);
     console.log(`✓ Health: http://localhost:${PORT}/health`);
     console.log(`✓ Accessible via Home Assistant Ingress`);
@@ -365,7 +368,11 @@ async function start() {
   });
 
   server.on('error', (err) => {
-    log('error', `Server error: ${err.message}`);
+    if (err.code === 'EADDRINUSE') {
+      log('error', `Port ${PORT} is already in use! ${err.message}`);
+    } else {
+      log('error', `Server error: ${err.message}`);
+    }
     process.exit(1);
   });
 
