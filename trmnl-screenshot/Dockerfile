@@ -20,12 +20,6 @@ RUN npm install --omit=dev
 # Copy application code
 COPY src ./src
 
-# Copy run script
-COPY run.sh /
-
-# Make run script executable
-RUN chmod +x /run.sh
-
 # Set environment
 ENV NODE_ENV=production
 ENV DATA_PATH=/data
@@ -35,5 +29,5 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 # Expose port for the addon HTTP server
 EXPOSE 3000
 
-# Run the startup script
-CMD ["/run.sh"]
+# Run a simple test loop via sh
+CMD ["/bin/sh", "-c", "echo 'TRMNL Screenshot Service Starting' && while true; do echo 'Service running at '$(date); sleep 30; done"]
