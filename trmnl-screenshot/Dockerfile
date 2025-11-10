@@ -1,6 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
-
-FROM ${BUILD_FROM}
+FROM alpine:latest
 
 # Install Node.js, npm, and dependencies for Puppeteer
 RUN apk add --no-cache \
@@ -37,5 +35,5 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 # Expose port for the addon HTTP server
 EXPOSE 3000
 
-# Run the startup script via dumb-init
+# Run the startup script
 CMD ["/run.sh"]
