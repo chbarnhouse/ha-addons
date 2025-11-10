@@ -30,5 +30,5 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 # Expose port for the addon HTTP server
 EXPOSE 3000
 
-# Use sh directly - no bashio, no shell scripts, just Node
-ENTRYPOINT ["/bin/sh", "-c", "echo 'Starting TRMNL Screenshot addon...' && node /app/src/index.js"]
+# Direct Node.js invocation without /bin/sh wrapper
+CMD ["/usr/bin/node", "/app/src/index.js"]
