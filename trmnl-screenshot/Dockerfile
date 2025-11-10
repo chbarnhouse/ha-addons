@@ -1,34 +1,18 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:18.0.3
-FROM ${BUILD_FROM}
+# Use official Home Assistant base image
+FROM ghcr.io/home-assistant/amd64-base:latest
 
-# Install Node.js and dependencies
-RUN apk add --no-cache \
-    nodejs \
-    npm \
-    chromium \
-    ca-certificates \
-    dbus
+# Install Node.js and npm
+RUN apk add --no-cache nodejs npm
 
-# Set working directory
-WORKDIR /app
+# Create app directory
+RUN mkdir -p /app
 
-# Copy package files
-COPY package*.json ./
+# Copy run script
+COPY run.sh /
+RUN chmod +x /run.sh
 
-# Install Node.js dependencies
-RUN npm install --omit=dev
+# Copy app code
+COPY app/ /app/
 
-# Copy application code
-COPY src ./src
-
-# Set environment
-ENV NODE_ENV=production
-ENV DATA_PATH=/data
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
-
-# Expose port for the addon HTTP server
-EXPOSE 3000
-
-# Direct Node.js invocation without /bin/sh wrapper
-CMD ["/usr/bin/node", "/app/src/index.js"]
+# Use run.sh as entrypoint
+CMD ["/run.sh"]

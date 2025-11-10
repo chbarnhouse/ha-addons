@@ -1,9 +1,9 @@
 ---
-name: TRMNL Screenshot
-version: "0.1.2"
-slug: trmnl_screenshot
-description: Capture Home Assistant dashboards for TRMNL e-ink devices
-url: "https://github.com/chbarnhouse/ha-addons/tree/main/trmnl-screenshot"
+name: TRMNL Screenshot (Deprecated)
+version: "0.1.31"
+slug: trmnl_screenshot_deprecated
+description: "[DEPRECATED] Old version - use TRMNL Screenshot instead"
+url: "https://github.com/chbarnhouse/ha-addons/tree/main/trmnl-screenshot-deprecated"
 arch:
   - amd64
 init: false
@@ -19,4 +19,4 @@ schema:
   image_quality: int(50,100)
   max_concurrent_captures: int(1,10)
   log_level: list(debug|info|warning|error)
-image: "ghcr.io/chbarnhouse/{arch}-addon-trmnl-screenshot"
+image: "ghcr.io/chbarnhouse/{arch}-addon-trmnl-screenshot-deprecated"

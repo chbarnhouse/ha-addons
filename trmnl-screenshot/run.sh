@@ -1,16 +1,12 @@
 #!/bin/sh
 set -e
 
-# TRMNL Screenshot Addon Startup Script
+echo "========================================"
+echo "TRMNL Screenshot Addon Starting"
+echo "========================================"
+echo "Node.js version: $(node --version)"
+echo "Starting application on port 3000..."
+echo ""
 
-# Log startup
-echo "Starting TRMNL Screenshot addon..."
-echo "User: $(id)"
-
-# Log addon options
-echo "Addon configuration:"
-echo "  Data path: ${DATA_PATH}"
-echo "  Node env: ${NODE_ENV}"
-
-# Start the Node.js application
-exec node /app/src/index.js
+# Execute the Node.js application
+exec node /app/index.js

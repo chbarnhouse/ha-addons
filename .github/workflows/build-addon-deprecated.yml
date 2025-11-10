@@ -1,12 +1,12 @@
-name: Build Minimal Addon Docker Images
+name: Build Deprecated Addon Docker Images
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'trmnl-screenshot-minimal/**'
-      - '.github/workflows/build-addon-minimal.yml'
+      - 'trmnl-screenshot-deprecated/**'
+      - '.github/workflows/build-addon-deprecated.yml'
   release:
     types: [published]
   workflow_dispatch:
@@ -52,22 +52,22 @@ jobs:
       - name: Extract version
         id: version
         run: |
-          VERSION=$(grep '^version:' trmnl-screenshot-minimal/config.yaml | awk '{print $2}' | tr -d '"')
+          VERSION=$(grep '^version:' trmnl-screenshot-deprecated/config.yaml | awk '{print $2}' | tr -d '"')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Build and push ${{ matrix.arch }} image
         uses: docker/build-push-action@v5
         with:
-          context: trmnl-screenshot-minimal
+          context: trmnl-screenshot-deprecated
           platforms: ${{ matrix.platforms }}
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot-minimal:${{ steps.version.outputs.version }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot-minimal:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot-deprecated:${{ steps.version.outputs.version }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot-deprecated:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Summary
         run: |
           echo "✅ Built and pushed ${{ matrix.arch }} image"
-          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot-minimal:${{ steps.version.outputs.version }}"
+          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot-deprecated:${{ steps.version.outputs.version }}"
