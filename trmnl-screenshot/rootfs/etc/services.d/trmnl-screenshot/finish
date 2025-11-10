@@ -1,4 +1,0 @@
-#!/bin/sh
-# S6 finish script - called when service terminates
-
-exit 0
