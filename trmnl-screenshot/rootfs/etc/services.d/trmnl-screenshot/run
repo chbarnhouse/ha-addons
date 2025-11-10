@@ -1,15 +1,11 @@
 #!/bin/sh
 
-# S6-overlay service run script with diagnostics
+# S6-overlay service run script - minimal test
 echo "=== TRMNL Screenshot Service Starting ===" >&2
 echo "Current user: $(id)" >&2
-echo "Current directory: $(pwd)" >&2
-echo "Node binary location:" >&2
-which node >&2 || echo "  node not found in PATH" >&2
-echo "Node version:" >&2
-node --version 2>&1 || echo "  Failed to run node --version" >&2
-echo "Checking /app/src/index.js:" >&2
-ls -la /app/src/index.js 2>&1 || echo "  File not found" >&2
-echo "=== Starting application ===" >&2
 
-exec node /app/src/index.js
+# Simple echo loop to test if the service can keep running
+while true; do
+  echo "Service is running at $(date)" >&2
+  sleep 30
+done
