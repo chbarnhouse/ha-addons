@@ -1,0 +1,16 @@
+{
+  "name": "trmnl-screenshot-addon",
+  "version": "0.1.2",
+  "description": "Home Assistant addon to capture dashboards for TRMNL e-ink devices",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "node app/index.js"
+  },
+  "keywords": ["home-assistant", "addon", "trmnl", "screenshot"],
+  "author": "Charlie Barnhouse",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^22.0.0",
+    "axios": "^1.6.0"
+  }
+}
