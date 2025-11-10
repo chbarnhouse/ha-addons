@@ -18,4 +18,4 @@ schema:
   image_quality: int(50,100)
   max_concurrent_captures: int(1,10)
   log_level: list(debug|info|warning|error)
-image: "ghcr.io/chbarnhouse/{arch}-addon-trmnl-screenshot-test"
+image: "ghcr.io/chbarnhouse/{arch}-addon-trmnl-screenshot"
