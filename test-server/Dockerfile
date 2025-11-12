@@ -1,8 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
-FROM ${BUILD_FROM}
-
-# Install Node.js
-RUN apk add --no-cache nodejs npm
+FROM node:22-alpine3.20
 
 WORKDIR /app
 
@@ -12,6 +8,5 @@ COPY run.sh /run.sh
 
 RUN chmod +x /run.sh && chmod +x ./index.js
 
-# Let Home Assistant's S6 overlay manage the container initialization
-# The supervisor will handle calling run.sh with init: true in config.yaml
+# Run the shell script which will execute Node.js as PID 1
 CMD ["/run.sh"]
