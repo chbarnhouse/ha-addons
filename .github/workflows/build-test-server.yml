@@ -1,13 +1,12 @@
-name: Build Addon Docker Images
+name: Build Test Server Docker Images
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'trmnl-screenshot/**'
       - 'test-server/**'
-      - '.github/workflows/build-addon.yml'
+      - '.github/workflows/build-test-server.yml'
   release:
     types: [published]
   workflow_dispatch:
@@ -35,11 +34,6 @@ jobs:
         include:
           - arch: amd64
             platforms: linux/amd64
-          # ARM builds disabled temporarily - npm install issues
-          # - arch: armv7
-          #   platforms: linux/arm/v7
-          # - arch: aarch64
-          #   platforms: linux/arm64
 
     steps:
       - name: Checkout repository
@@ -58,22 +52,22 @@ jobs:
       - name: Extract version
         id: version
         run: |
-          VERSION=$(grep '^version:' trmnl-screenshot/config.yaml | awk '{print $2}' | tr -d '"')
+          VERSION=$(grep '^version:' test-server/config.yaml | awk '{print $2}' | tr -d '"')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Build and push ${{ matrix.arch }} image
         uses: docker/build-push-action@v5
         with:
-          context: trmnl-screenshot
+          context: test-server
           platforms: ${{ matrix.platforms }}
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot:${{ steps.version.outputs.version }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-test-server:${{ steps.version.outputs.version }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-test-server:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Summary
         run: |
           echo "✅ Built and pushed ${{ matrix.arch }} image"
-          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-trmnl-screenshot:${{ steps.version.outputs.version }}"
+          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}-addon-test-server:${{ steps.version.outputs.version }}"
