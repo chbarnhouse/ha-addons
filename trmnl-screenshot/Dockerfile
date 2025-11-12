@@ -1,4 +1,4 @@
-# Use official Home Assistant base image
+# Use official Home Assistant base image with S6 overlay
 FROM ghcr.io/home-assistant/amd64-base:latest
 
 # Install Node.js, npm, and Chromium dependencies
@@ -31,5 +31,5 @@ COPY app/ ./
 # Expose port
 EXPOSE 5001
 
-# Use run.sh as entrypoint
-CMD ["/run.sh"]
+# Use S6 overlay init system
+ENTRYPOINT ["/init"]

@@ -1,11 +1,12 @@
-ARG BUILD_FROM=node:22-alpine3.20
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base-nodejs:latest
 FROM ${BUILD_FROM}
 
 WORKDIR /app
 
 # Copy application
 COPY app/index.js ./index.js
+COPY run.sh /run.sh
 
-RUN chmod +x ./index.js
+RUN chmod +x /run.sh && chmod +x ./index.js
 
-CMD ["node", "index.js"]
+ENTRYPOINT ["/init"]
