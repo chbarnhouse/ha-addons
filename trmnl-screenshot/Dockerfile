@@ -31,5 +31,6 @@ COPY app/ ./
 # Expose port
 EXPOSE 5001
 
-# Use S6 overlay init system
-ENTRYPOINT ["/init"]
+# Let Home Assistant's S6 overlay manage the container initialization
+# The supervisor will handle calling run.sh with init: true in config.yaml
+CMD ["/run.sh"]
