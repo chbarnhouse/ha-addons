@@ -1,0 +1,19 @@
+---
+name: Test Server
+version: "0.1.0"
+slug: test-server
+description: Minimal test server for ingress testing
+url: "https://github.com/chbarnhouse/ha-addons/tree/main/test-server"
+arch:
+  - amd64
+init: false
+startup: application
+boot: auto
+ports:
+  8000/tcp: 8000
+image: "ghcr.io/chbarnhouse/{arch}-addon-test-server"
+ingress:
+  title: Test
+  icon: mdi:test-tube
+  port: 8000
+  protocol: http
