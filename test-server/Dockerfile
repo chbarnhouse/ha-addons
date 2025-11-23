@@ -1,4 +1,8 @@
-FROM node:22-alpine3.20
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
+FROM ${BUILD_FROM}
+
+# Install Node.js
+RUN apk add --no-cache nodejs npm
 
 WORKDIR /app
 
@@ -8,5 +12,5 @@ COPY run.sh /run.sh
 
 RUN chmod +x /run.sh && chmod +x ./index.js
 
-# Run the shell script which will execute Node.js as PID 1
+# Supervisor with S6 overlay will manage startup
 CMD ["/run.sh"]
