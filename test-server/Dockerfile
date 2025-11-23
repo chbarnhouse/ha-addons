@@ -11,7 +11,7 @@ RUN chmod +x /run.sh && chmod +x ./index.js
 # Health check for Home Assistant supervisor
 # This tells supervisor when the addon is ready for ingress
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:8000/health || exit 1
+  CMD node -e "require('http').get('http://localhost:8000/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})" || exit 1
 
 # Run the shell script which will execute Node.js as PID 1
 CMD ["/run.sh"]
