@@ -1,12 +1,12 @@
 ---
 name: Test Server
-version: "0.1.8"
+version: "0.1.9"
 slug: test-server
 description: Minimal test server for ingress testing
 url: "https://github.com/chbarnhouse/ha-addons/tree/main/test-server"
 arch:
   - amd64
-init: true
+init: false
 startup: application
 boot: auto
 ports:
