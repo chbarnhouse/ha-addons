@@ -14,34 +14,10 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  const html = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Test Server</title>
-        <style>
-          body { font-family: Arial, sans-serif; margin: 20px; }
-          .box { padding: 20px; background: #f0f0f0; border-radius: 8px; }
-          .status { color: #0c0; font-weight: bold; }
-        </style>
-      </head>
-      <body>
-        <h1>Test Server Working!</h1>
-        <div class="box">
-          <p><span class="status">✓ Status: ONLINE</span></p>
-          <p>If you're seeing this, ingress is working correctly.</p>
-          <p><strong>Time:</strong> ${new Date().toISOString()}</p>
-          <p><strong>Method:</strong> ${req.method}</p>
-          <p><strong>Path:</strong> ${req.url}</p>
-          <p><strong>Uptime:</strong> ${process.uptime().toFixed(1)}s</p>
-        </div>
-      </body>
-    </html>
-  `;
+  const html = `<!DOCTYPE html><html><head><title>Test</title></head><body><h1>OK</h1></body></html>`;
 
   res.writeHead(200, {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Content-Length': Buffer.byteLength(html)
+    'Content-Type': 'text/html'
   });
   res.end(html);
 });
