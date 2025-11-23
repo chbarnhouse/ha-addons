@@ -14,8 +14,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(`
+  const html = `
     <!DOCTYPE html>
     <html>
       <head>
@@ -38,7 +37,15 @@ const server = http.createServer((req, res) => {
         </div>
       </body>
     </html>
-  `);
+  `;
+
+  res.writeHead(200, {
+    'Content-Type': 'text/html; charset=utf-8',
+    'Content-Length': Buffer.byteLength(html),
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Connection': 'close'
+  });
+  res.end(html);
 });
 
 server.listen(PORT, '0.0.0.0', () => {
