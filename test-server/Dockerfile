@@ -6,10 +6,8 @@ RUN apk add --no-cache nodejs npm
 
 WORKDIR /app
 
-# Copy application and run script
+# Copy application
 COPY app/index.js ./index.js
-COPY run.sh /app/run.sh
-RUN chmod +x /app/run.sh
 
-# HA base image will use this as the startup command with S6 overlay
-CMD ["/app/run.sh"]
+# S6 overlay will execute node directly as a supervised process
+CMD ["node", "/app/index.js"]
