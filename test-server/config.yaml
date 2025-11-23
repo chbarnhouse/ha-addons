@@ -1,6 +1,6 @@
 ---
 name: Test Server
-version: "0.1.5"
+version: "0.1.6"
 slug: test-server
 description: Minimal test server for ingress testing
 url: "https://github.com/chbarnhouse/ha-addons/tree/main/test-server"
@@ -10,7 +10,7 @@ init: false
 startup: application
 boot: auto
 ports:
-  8000/tcp: null
+  8000/tcp: 8000
 image: "ghcr.io/chbarnhouse/{arch}-addon-test-server"
 ingress:
   title: Test
