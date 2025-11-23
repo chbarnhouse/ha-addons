@@ -6,20 +6,10 @@ RUN apk add --no-cache nodejs npm
 
 WORKDIR /app
 
-# Copy application
+# Copy application and run script
 COPY app/index.js ./index.js
+COPY run.sh /app/run.sh
+RUN chmod +x /app/run.sh
 
-# Set up S6 service for proper supervision
-RUN mkdir -p /etc/s6-overlay/s6-rc.d/nodeapp/dependencies.d
-
-COPY s6-scripts/run /etc/s6-overlay/s6-rc.d/nodeapp/run
-RUN chmod +x /etc/s6-overlay/s6-rc.d/nodeapp/run
-
-# Create s6 service type file
-RUN echo "longrun" > /etc/s6-overlay/s6-rc.d/nodeapp/type
-
-# Create s6 dependencies file
-RUN touch /etc/s6-overlay/s6-rc.d/nodeapp/dependencies.d/base
-
-# Let S6 overlay manage everything
-ENTRYPOINT ["/init"]
+# HA base image will use this as the startup command with S6 overlay
+CMD ["/app/run.sh"]
