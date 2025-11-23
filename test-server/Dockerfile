@@ -6,4 +6,6 @@ RUN apk add --no-cache nodejs npm
 WORKDIR /app
 COPY app/index.js ./index.js
 
-CMD ["node", "/app/index.js"]
+# Copy S6 service definition
+COPY etc/services.d/node/run /etc/services.d/node/run
+RUN chmod +x /etc/services.d/node/run
