@@ -1,12 +1,12 @@
 ---
 name: Test Server
-version: "1.0.1"
+version: "1.0.2"
 slug: test-server
 description: Minimal test addon to verify ingress functionality
 url: "https://github.com/chbarnhouse/ha-addons/tree/main/test-server"
 arch:
   - amd64
-init: true
+init: false
 startup: application
 boot: auto
 ports:
