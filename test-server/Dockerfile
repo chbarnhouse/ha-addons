@@ -1,12 +1,22 @@
-FROM node:22-alpine3.20
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
+FROM ${BUILD_FROM}
+
+# Install Node.js
+RUN apk add --no-cache nodejs npm
 
 WORKDIR /app
 
-# Copy application and run script
+# Copy application
 COPY app/index.js ./index.js
-COPY run.sh /run.sh
 
-RUN chmod +x /run.sh && chmod +x ./index.js
+# Set up S6 service for proper supervision
+RUN mkdir -p /etc/s6-overlay/s6-rc.d/nodeapp/
 
-# Run the shell script which will execute Node.js as PID 1
-CMD ["/run.sh"]
+COPY s6-scripts/run /etc/s6-overlay/s6-rc.d/nodeapp/run
+RUN chmod +x /etc/s6-overlay/s6-rc.d/nodeapp/run
+
+# Create s6 dependencies file
+RUN echo "" > /etc/s6-overlay/s6-rc.d/nodeapp/dependencies.d/base
+
+# Let S6 overlay manage everything
+ENTRYPOINT ["/init"]

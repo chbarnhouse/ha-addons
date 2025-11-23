@@ -7,13 +7,6 @@ const PORT = process.env.PORT || 8000;
 const server = http.createServer((req, res) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
 
-  // Health check endpoint for supervisor
-  if (req.url === '/health' || req.url === '/healthz') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 'ok', uptime: process.uptime() }));
-    return;
-  }
-
   const html = `<!DOCTYPE html><html><head><title>Test</title></head><body><h1>OK</h1></body></html>`;
 
   res.writeHead(200, {
